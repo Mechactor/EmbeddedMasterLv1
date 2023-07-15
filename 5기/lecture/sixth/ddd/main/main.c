@@ -7,8 +7,10 @@
 
 #include "how_to_malloc.h"
 
-#include "../command/command_handler.h"
+#include "../member/member.h"
 #include "../member/member_handler.h"
+
+#include "../command/command_handler.h"
 #include "../command/command_call_table.h"
 
 #define ASCII_BIAS          (0x30)
@@ -39,16 +41,18 @@ void clear_input_buffer()
     while ((c = getchar()) != '\n' && c != EOF) { }
 }
 
+#define USER_COMMAND_BUFFER_SIZE            3
+
 char get_user_selected_number (void)
 {
-    char selected_number = 0;
+    char selected_number[USER_COMMAND_BUFFER_SIZE] = { 0 };
     char message[] = "원하는 동작을 입력하세요: ";
     int message_length = strlen(message);
     
     write(1, message, message_length);
-    read(0, &selected_number, 2);
+    read(0, selected_number, USER_COMMAND_BUFFER_SIZE);
 
-    return selected_number - ASCII_BIAS;
+    return atoi(selected_number);
 }
 
 int main (void)
@@ -57,6 +61,7 @@ int main (void)
 
     printf("malloc() 동적 할당 테스트\n");
     how_to_malloc_data();
+    init_member_info_table();
 
     for (; !is_finished;)
     {
