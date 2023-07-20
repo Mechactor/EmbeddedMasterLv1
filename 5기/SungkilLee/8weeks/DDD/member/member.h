@@ -9,6 +9,7 @@ struct _member
 {
     char *id;
     char password[MAX_USER_INPUT];
+    char nickname[MAX_USER_INPUT]
 };
 
 member *member_info_table;

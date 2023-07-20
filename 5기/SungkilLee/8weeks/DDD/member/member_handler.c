@@ -15,9 +15,11 @@ int INITIAL_ALLOC = 10;
 
 char print_id_msg[] = "아이디를 입력하세요 : ";
 char print_password_msg[] = "비밀번호를 입력하세요 : ";
+char print_nickname_msg[] = "닉네임을 입력하세요 : ";
 
 char user_id[MAX_USER_INPUT];
 char user_password[MAX_USER_INPUT];
+char user_nickname[MAX_USER_INPUT];
 
 void member_register (void)
 {
@@ -31,6 +33,9 @@ void member_register (void)
 
     write(1, print_password_msg, strlen(print_password_msg));
     read(0, user_password, MAX_USER_INPUT);
+
+    write(1, print_nickname_msg, strlen(print_nickname_msg));
+    read(0, user_nickname, MAX_USER_INPUT);
 
     // member_info_table에서 빈 공간을 찾아서 사용자 정보를 저장
     int empty_slot = -1;
@@ -61,6 +66,7 @@ void member_register (void)
     // 입력 받은 정보로 회원 정보를 저장
     member_info_table[empty_slot].id = strdup(user_id); // strdup는 문자열을 복제하는 함수
     strcpy(member_info_table[empty_slot].password, user_password);
+    strcpy(member_info_table[empty_slot].nickname, user_nickname);
 
     char success_msg[] = "회원 가입이 완료되었습니다!\n";
     write(1, success_msg, strlen(success_msg));
@@ -106,7 +112,7 @@ void member_login (void)
     if (found_member != NULL && strcmp(found_member->password, user_password) == 0)
     {
         char success_msg[50];
-        sprintf(success_msg, "로그인 성공! 환영합니다, %s", found_member->id);
+        sprintf(success_msg, "로그인 성공! 환영합니다, %s", found_member->nickname);
         write(1, success_msg, strlen(success_msg));
     }
     else
