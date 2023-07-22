@@ -4,7 +4,7 @@
 #define MAX_USER_INPUT          17
 
 typedef struct _member member;
-struct _member 
+struct _member
 {
     int unique_value;
     char *id;
@@ -12,8 +12,9 @@ struct _member
 };
 
 extern int unique_member_value_count;
-extern member *member_info_table;
 
-void init_member_info_table (void);
+member *init_member (char *id, char *password);
+void print_member (member *member_object);
+void free_member (member *member_object);
 
 #endif
