@@ -5,11 +5,13 @@
 #include "command_handler.h"
 
 #include <stdio.h>
+#include <stdlib.h>
 
 // 여기서 각종 메모리 해제를 모두 진행해야함
 void program_exit (void)
 {
     printf("프로그램을 종료합니다!\n");
+    exit(0);
 }
 
 void invoke_member_call_table (void)
