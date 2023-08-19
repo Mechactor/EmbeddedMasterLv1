@@ -6,7 +6,25 @@
 
 int unique_member_value_count = 0;
 
-member *init_member (char *id, char *password)
+member *init_member (char *id, char *password, char *nickname)
+{
+    int id_length = strlen(id) + 1;
+    int password_length = strlen(password);
+    int nickname_length = strlen(nickname);
+    member *member_object = (member *)malloc(sizeof(member));
+
+    member_object->id = (char *)malloc(sizeof(char) * id_length);
+    strncpy(member_object->id, id, id_length);
+    member_object->nickname = (char *)malloc(sizeof(char) * nickname_length);
+    strncpy(member_object->nickname, nickname, nickname_length);
+    memset(member_object->password, 0x0, MAX_USER_INPUT);
+    strncpy(member_object->password, password, password_length);
+    member_object->unique_value = unique_member_value_count++;
+
+    return member_object;
+}
+
+member *found_member (char *id, char *password)
 {
     int id_length = strlen(id) + 1;
     int password_length = strlen(password);
@@ -16,16 +34,17 @@ member *init_member (char *id, char *password)
     strncpy(member_object->id, id, id_length);
     memset(member_object->password, 0x0, MAX_USER_INPUT);
     strncpy(member_object->password, password, password_length);
-    member_object->unique_value = unique_member_value_count++;
 
     return member_object;
 }
+
 
 void print_member (member *member_object)
 {
     printf("member unique value: %d\n", member_object->unique_value);
     printf("member id: %s\n", member_object->id);
     printf("member password: %s\n", member_object->password);
+    printf("member nickname: %s\n", member_object->nickname);
 }
 
 void free_member (member *member_object)
@@ -33,7 +52,9 @@ void free_member (member *member_object)
     printf("free member memory\n");
     printf("member_object: 0x%x\n", member_object);
     printf("member_object->id: %s\n", member_object->id);
+    printf("member_object->nickname: %s\n", member_object->nickname);
 
     free(member_object->id);
+    free(member_object->nickname);
     free(member_object);
 }

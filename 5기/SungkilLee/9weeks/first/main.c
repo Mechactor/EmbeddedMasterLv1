@@ -14,6 +14,8 @@ int main (void) {
 
 void main_command_controller (void)
 {
+    //init in memory data base를 만들어야 함 / member, product, order를 관리
+
     while (!check_user_input_close())
     {
         print_basic_command();

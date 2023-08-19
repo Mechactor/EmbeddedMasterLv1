@@ -1,4 +1,5 @@
 #include "member_command.h"
+#include "../../utility/ui/console/input_process.h"
 
 #include <stdio.h>
 #include <unistd.h>
@@ -12,21 +13,20 @@ char member_command_msg[] = "다음 명령들이 수행 가능합니다!\n"
 
 void print_member_command (void)
 {
-    printf("%s", member_command_msg);
+    print_input_msg (member_command_msg);
 }
 
 #define USER_COMMAND_BUFFER_SIZE 10
 
 int input_user_member_command (void)
 {
-    char selected_number[USER_COMMAND_BUFFER_SIZE] = {0, };
-    char message[] = "원하는 명령을 입력하세요: ";
-    int message_length = strlen(message);
-    
-    write(1, message, message_length);
-    read(0, &selected_number, USER_COMMAND_BUFFER_SIZE);
 
-    return atoi(selected_number);
+    char message[] = "원하는 명령을 입력하세요: ";
+
+
+    char real_user_input[USER_COMMAND_INPUT_MAX] = { 0 };
+    custom_user_input_with_msg(message, real_user_input);
+    return atoi(real_user_input);
 
     //return 0;
 }
