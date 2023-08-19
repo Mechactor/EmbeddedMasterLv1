@@ -7,17 +7,27 @@
 
 #include "../service/request/member_request.h"
 
+//#include "../../utility/ui/console/input_process.h"
+#include "../../ui/console/user_input.h"
+#include "../../session/session.h"
+
 #include <stdio.h>
 #include <string.h>
 
 void member_register (void)
 {
-    char id[3] = "id";
-    char password[9] = "password";
+    char id[5] = "id: ";
+    char password[11] = "password: ";
+
+    char user_input_id[MAX_USER_INPUT] = { 0 };
+    char user_input_password[MAX_USER_INPUT] = { 0 };
 
     printf("member controller: register()\n");
 
-    member_request *member_request_object = init_member_request(id, password);
+    get_user_input_with_msg(id, user_input_id);
+    get_hidden_user_input_with_msg(password, user_input_password);
+
+    member_request *member_request_object = init_member_request(user_input_id, user_input_password);
     member_service_table[MEMBER_REGISTER_SERVICE](member_request_object);
 
     free_member_request(member_request_object);
@@ -25,13 +35,21 @@ void member_register (void)
 
 void member_login (void)
 {
-    char user_id[MAX_USER_INPUT] = { 0 };
-    char user_password[MAX_USER_INPUT] = { 0 };
-    char message[] = "로그인 시퀀스를 진행합니다!\n";
-    int message_length = strlen(message);
+    char id[5] = "id: ";
+    char password[11] = "password: ";
 
+    char user_input_id[MAX_USER_INPUT] = { 0 };
+    char user_input_password[MAX_USER_INPUT] = { 0 };
+    printf("member controller: login()\n");
 
-    printf("로그인 성공!\n");
+    get_user_input_with_msg(id, user_input_id);
+    get_hidden_user_input_with_msg(password, user_input_password);
+
+    member_request *member_request_object = init_member_request(user_input_id, user_input_password);
+    member_service_table[MEMBER_LOGIN_SERVICE](member_request_object);
+
+    if (session_object.session_id) { printf("로그인 성공!\n"); }
+    else { printf("로그인 실패!\n"); }
 }
 
 void member_list (void)
