@@ -1,6 +1,6 @@
 #include "member_repository_handler.h"
 
-#include "../../data_structure/list/list.h"
+// #include "../../data_structure/list/list.h"
 #include "../../utility/ui/console/input_process.h"
 #include "../entity/member.h"
 
